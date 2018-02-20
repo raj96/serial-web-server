@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>
+			Serial Communication
+		</title>
+		<link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+	</head>
+	
+	<style>
+		* {
+			color:snow;
+			overflow:hidden;
+		}
+		.navigation-bar {
+			background:rgba(0,0,0,0);
+			width:100vw;
+			height:10vh;
+		}
+		.dead {
+			cursor:default;
+			background:rgba(0,0,0,0);
+			border:none;
+			font-size:1.2em;
+		}
+		.info-board {
+			background:rgba(0,0,0,0.5);
+			padding-left:20px;
+			padding-right:20px;
+			overflow-y:scroll;
+			max-height:88vh;
+			direction:rtl;
+		}
+		
+		body {
+			background:rgb(15,20,30);
+		}
+		
+	</style>
+	
+	<body>
+		<div class="container-fluid navigation-bar">
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">
+					<p class="dead btn">Serial Communication</p>
+				</div>
+			</div>
+		</div>
+		
+		<div id="live" class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3"></div>
+				<div class="col-sm-6 col-md-6 col-lg-6 col-xs-6 info-board">
+					
+				</div>
+				<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3"></div>
+			</div>
+		</div>
+		
+		<script>
+			
+			function initWsConnection(infoBoard) {
+				var ws = new WebSocket('ws://localhost:40110');
+				
+				ws.onopen = ()=>{
+					infoBoard.innerHTML = "<center><h3>WebSocket Connection Successful</h3></center>";
+				}
+				
+				ws.onmessage = (ev)=>{
+					infoBoard.innerHTML += '<h4>'+ev.data+'</h4><br>';
+				}
+				
+			}
+			
+			window.onload = ()=>{
+				var infoBoard = document.getElementsByClassName('info-board')[0];
+				initWsConnection(infoBoard);
+			}
+			
+		</script>
+	</body>
+	
+</html>
