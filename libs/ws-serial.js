@@ -32,6 +32,7 @@ wss.start = (devicePort,baudRate)=>{
 			})
 			
 			port.on('data',(data)=>{
+				console.log("Received data from "+devicePort)
 				ws.send(String(data))
 			})
 		
