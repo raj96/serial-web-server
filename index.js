@@ -1,14 +1,12 @@
 var devicePort = process.argv[2]
 var baudRate = Number(process.argv[3])
 
-if( devicePort === undefined || baudRate === 0) {
+if( devicePort === undefined || baudRate === 0 || isNaN(baudRate) ) {
 		console.log('Usage: node index.js <device id | COM id> <baud rate>')
 		process.exit()
 }
 
 const express = require('express')
-const serialport = require('serialport')
-const bodyParser = require('body-parser')
 const serialListener = require('./libs/ws-serial.js')
 
 const app = express()
